@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edm유학센터 영국 석사 진학 AI 컨설팅</title>
+    <!-- Apple 스타일 타이포그래피 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Noto Sans KR"', 'sans-serif'],
+                    },
+                    colors: {
+                        'apple-black': '#000000',
+                        'apple-dark': '#1d1d1f',
+                        'apple-gray': '#f5f5f7',
+                        'apple-blue': '#0071e3',
+                        'apple-blue-hover': '#0077ED',
+                        'apple-light-gray': '#86868b',
+                    },
+                    letterSpacing: {
+                        'apple-tight': '-0.022em',
+                        'apple-tighter': '-0.028em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #f5f5f7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pill-btn {
+            border-radius: 980px;
+            transition: all 0.3s ease;
+        }
+
+        .section-dark { background-color: #000000; color: #f5f5f7; }
+        .section-light { background-color: #f5f5f7; color: #1d1d1f; }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chat Styles */
+        .chat-bubble-ai {
+            background-color: #1d1d1f;
+            color: #f5f5f7;
+            border-radius: 18px 18px 18px 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .chat-bubble-user {
+            background-color: #0071e3;
+            color: #ffffff;
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        /* Card Styles */
+        .apple-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .apple-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+        
+        .uni-link-banner {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .uni-link-banner:hover {
+            background-color: #e8e8ed;
+            color: #0071e3;
+        }
+
+        .info-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #f5f5f7;
+            border: 1px solid #ebebeb;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #4b4b4d;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col">
+
+    <!-- Global Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between text-xs text-apple-gray font-light tracking-wide">
+            <a href="#" class="opacity-80 hover:opacity-100 transition flex items-center gap-2">
+                <img src="https://s3.ap-northeast-2.amazonaws.com/img.edmuhak.com/uhak/renewal/common/edmuhak_logo.svg" alt="edm" class="h-4 filter invert brightness-0">
+                <span class="font-semibold text-white tracking-normal ml-2 border-l border-gray-600 pl-2">AI 컨설팅</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#" class="opacity-80 hover:opacity-100 transition">영국유학</a>
+                <a href="#" class="opacity-80 hover:opacity-100 transition">석사과정</a>
+                <a href="#" class="opacity-80 hover:opacity-100 transition">프리마스터</a>
+            </div>
+            <a href="tel:1833-2341" class="pill-btn bg-white text-black px-4 py-1.5 font-medium hover:bg-gray-200 transition">상담예약</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main id="app-container" class="flex-grow pt-14 flex flex-col">
+        
+        <!-- Hero Section -->
+        <section id="hero-section" class="section-dark flex-grow flex flex-col items-center justify-center text-center px-4 relative overflow-hidden min-h-[90vh]">
+            <div class="z-10 fade-in-up" style="animation-delay: 0.1s;">
+                <h2 class="text-apple-blue font-semibold tracking-wide text-sm md:text-base mb-4 uppercase">Master's Degree in UK</h2>
+                <h1 class="text-5xl md:text-7xl font-bold tracking-apple-tighter leading-tight mb-6">
+                    영국 석사 진학.<br>초개인화 AI로 설계하다.
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 font-light tracking-apple-tight mb-10 max-w-2xl mx-auto">
+                    2026-27 최신 영국 대학 입시 데이터 기반.<br class="hidden md:block">당신의 상황에 맞는 가장 확실한 진학 루트를 확인하세요.
+                </p>
+                <button onclick="startConsulting()" class="pill-btn bg-apple-blue hover:bg-apple-blue-hover text-white px-8 py-4 text-lg font-medium inline-flex items-center gap-2 shadow-lg shadow-blue-900/50">
+                    진단 시작하기 <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Interactive Chat Section -->
+        <section id="chat-section" class="section-dark flex-grow py-20 hidden">
+            <div class="max-w-3xl mx-auto px-4 flex flex-col h-full">
+                <div class="text-center mb-10 fade-in-up">
+                    <h2 class="text-3xl font-bold tracking-apple-tighter text-white mb-2">AI 컨설팅 진행 중</h2>
+                    <p class="text-gray-400 font-light">학생분의 상황을 정확히 파악하기 위해 5가지 질문을 드립니다.</p>
+                </div>
+
+                <div id="chat-history" class="flex-grow overflow-y-auto space-y-6 mb-8 pb-4">
+                    <!-- Chat bubbles will be appended here -->
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 fade-in-up mt-auto">
+                    <!-- Options will be appended here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section (Dynamically generated) -->
+        <section id="result-section" class="hidden w-full bg-white text-apple-dark">
+            <!-- Results will be injected here -->
+        </section>
+
+    </main>
+
+    <script>
+        // State Management
+        let currentState = {};
+        let step = 0;
+
+        // 2026-27 Detailed Major Data with Descriptions, Course Names, Official Links, Locations and Tuitions
+        const majorData = {
+            "비즈니스 / 마케팅 / 경영": {
+                desc: "기업의 데이터와 시장을 분석하여 비즈니스 방향을 예측하고 의사결정을 내리는 현대 경영의 핵심 분야입니다. MBA, Business Analytics, Marketing, HR, Supply Chain Management 등이 포함되며 실무 연계가 뛰어납니다.",
+                schools: [
+                    { 
+                        name: "University of Warwick", 
+                        course: "MSc Business with Marketing / MSc Business Analytics",
+                        rank: "세계 67위 / 영국 9위 (비즈니스 초강세)",
+                        location: "코번트리 (Coventry, 잉글랜드 중부)",
+                        tuition: "약 £35,000 ~ £38,000",
+                        desc: "Warwick Business School(WBS)은 세계 1%에 해당하는 Triple Crown 인증을 받은 명문입니다. 리서치뿐만 아니라 강력한 산학연계 커리어 센터를 운영합니다.",
+                        link: "https://www.wbs.ac.uk/courses/postgraduate/"
+                    },
+                    { 
+                        name: "University of Manchester", 
+                        course: "MSc Marketing / MSc Management",
+                        rank: "세계 32위 / 영국 6위 (러셀그룹)", 
+                        location: "맨체스터 (Manchester, 잉글랜드 북서부)",
+                        tuition: "약 £33,000 ~ £36,000",
+                        desc: "Alliance MBS는 영국 최대 규모의 비즈니스 스쿨 중 하나로, 철저한 실무 중심의 산학 연계 프로젝트(Business in Practice)를 제공합니다.",
+                        link: "https://www.alliancembs.manchester.ac.uk/study/masters/"
+                    }
+                ]
+            },
+            "IT / 데이터 사이언스 / 사이버보안": {
+                desc: "4차 산업혁명의 핵심인 빅데이터, 인공지능, 그리고 사이버 보안을 다룹니다. 데이터 수집부터 시각화, 해킹 방어 체계 구축까지 미래 유망 IT 산업 전반의 고도화된 기술을 학습합니다.",
+                schools: [
+                    { 
+                        name: "University of Edinburgh", 
+                        course: "MSc Data Science / MSc Artificial Intelligence",
+                        rank: "세계 22위 / 영국 5위 (CS 분야 유럽 최고 수준)", 
+                        location: "에든버러 (Edinburgh, 스코틀랜드)",
+                        tuition: "약 £38,500 ~ £42,000",
+                        desc: "인포매틱스 분야에서 영국 최고 수준의 연구 성과를 자랑하며, 인공지능과 빅데이터 분야에서 스코틀랜드와 유럽의 선두주자입니다.",
+                        link: "https://www.ed.ac.uk/informatics/postgraduate"
+                    },
+                    { 
+                        name: "King's College London (KCL)", 
+                        course: "MSc Cyber Security / MSc Data Science",
+                        rank: "세계 40위 / 영국 7위", 
+                        location: "런던 (London, 중심부)",
+                        tuition: "약 £35,000 ~ £39,000",
+                        desc: "런던 중심부에 위치하여 금융권 및 글로벌 IT 기업들과의 네트워크가 뛰어납니다. 복잡한 시스템의 보안 및 데이터 알고리즘 연구에 특화되어 있습니다.",
+                        link: "https://www.kcl.ac.uk/study/postgraduate-taught"
+                    }
+                ]
+            },
+            "공학 (항공/자동차/토목/화학)": {
+                desc: "인류의 생활환경(토목/건축)부터 최첨단 모빌리티(항공우주/자동차), 그리고 신소재 및 에너지(화학공학)까지 다루는 산업의 근간입니다. 영국은 전통적으로 공학 분야에서 세계적인 산학협력 네트워크를 갖추고 있습니다.",
+                schools: [
+                    { 
+                        name: "Cranfield University", 
+                        course: "MSc Aerospace Engineering / Automotive Engineering",
+                        rank: "항공우주 분야 영국 1위 (대학원 중심 대학)",
+                        location: "크랜필드 (Cranfield, 잉글랜드 베드퍼드셔)",
+                        tuition: "약 £28,000 ~ £30,000", 
+                        desc: "영국 내 유일하게 공항을 자체 소유한 대학원으로, Rolls-Royce, BAE Systems 등 글로벌 항공/자동차 기업들과의 독보적인 공동 프로젝트를 진행합니다.",
+                        link: "https://www.cranfield.ac.uk/themes/aerospace"
+                    },
+                    { 
+                        name: "University of Sheffield", 
+                        course: "MSc Civil Engineering / MSc Mechanical Engineering",
+                        rank: "세계 104위 (공대 리서치 영국 최상위권)",
+                        location: "셰필드 (Sheffield, 잉글랜드 중북부)",
+                        tuition: "약 £30,000 ~ £32,000", 
+                        desc: "러셀그룹 소속으로, 특히 토목공학과 기계공학 분야에서 탁월한 연구 실적과 첨단 실험 시설(Diamond 건물)을 보유하고 있습니다.",
+                        link: "https://www.sheffield.ac.uk/engineering"
+                    }
+                ]
+            },
+            "사회과학 (공공정책/개발학/행정)": {
+                desc: "환경, 빈곤, 국제관계 등 글로벌 이슈를 연구하는 개발학과 국가 발전의 틀을 짜는 행정학(MPA), 공공정책학을 다룹니다. 특히 공무원 국비 유학으로 가장 선호되는 분야입니다.",
+                schools: [
+                    { 
+                        name: "University of Sussex", 
+                        course: "MA Development Studies",
+                        rank: "개발학(Development Studies) 부동의 세계 1위",
+                        location: "브라이튼 (Brighton, 잉글랜드 남부)",
+                        tuition: "약 £23,000 ~ £25,000", 
+                        desc: "수년간 하버드, 옥스퍼드를 제치고 개발학 분야 세계 1위를 수성하고 있는 명실상부한 최고 명문으로, UN 등 국제기구 진출에 유리합니다.",
+                        link: "https://www.sussex.ac.uk/study/masters/global-studies"
+                    },
+                    { 
+                        name: "University of York", 
+                        course: "Master of Public Administration (MPA)",
+                        rank: "사회정책 및 행정학 영국 내 Top 10", 
+                        location: "요크 (York, 잉글랜드 북부)",
+                        tuition: "약 £24,000 ~ £26,000",
+                        desc: "공공정책(Public Policy) 및 행정학(MPA) 분야에서 뛰어난 성과를 내고 있으며, 한국 공무원 및 정부 산하기관 임직원들이 가장 선호하는 대학 중 하나입니다.",
+                        link: "https://www.york.ac.uk/study/postgraduate/courses/"
+                    }
+                ]
+            },
+            "미디어 / 저널리즘 / 박물관학": {
+                desc: "미디어 종주국인 영국의 선진화된 커뮤니케이션 이론과 저널리즘 실무, 그리고 예술경영과 박물관학(Museum Studies)을 심도 있게 탐구하는 문화/예술 융합 학문입니다.",
+                schools: [
+                    { 
+                        name: "Goldsmiths, University of London", 
+                        course: "MA Media & Communications",
+                        rank: "미디어 & 커뮤니케이션 세계 12위", 
+                        location: "런던 (London, 잉글랜드)",
+                        tuition: "약 £24,000 ~ £26,000",
+                        desc: "창의적이고 혁신적인 런던대 소속 대학으로, 미디어, 문화연구, 예술 분야에서 세계적인 명성을 구가하며 수많은 미디어계 거장을 배출했습니다.",
+                        link: "https://www.gold.ac.uk/pg/"
+                    },
+                    { 
+                        name: "University of Leicester", 
+                        course: "MA/MSc Museum Studies",
+                        rank: "박물관학(Museum Studies) 압도적 세계 선두", 
+                        location: "레스터 (Leicester, 잉글랜드 중부)",
+                        tuition: "약 £22,000 ~ £24,000",
+                        desc: "박물관학 분야에서 가장 오랜 역사와 최고 수준의 연구 실적을 자랑하며, 전 세계 박물관 및 갤러리와 광범위한 산학연계(Placement)를 맺고 있습니다.",
+                        link: "https://le.ac.uk/museum-studies"
+                    }
+                ]
+            },
+            "보건 / 생물의학 / 심리학": {
+                desc: "인간의 신체적, 정신적 건강을 연구하는 분야입니다. 첨단 의공학(Biomedical)부터 공중보건(Public Health), 그리고 범죄/상담 심리학과 비전공자를 위한 심리학 전환(Conversion) 과정까지 포함합니다.",
+                schools: [
+                    { 
+                        name: "University College London (UCL)", 
+                        course: "MSc Biomedical Science",
+                        rank: "세계 9위 / 생명과학 및 의학 세계 최상위", 
+                        location: "런던 (London, 블룸즈버리 중심)",
+                        tuition: "약 £35,000 ~ £40,000",
+                        desc: "런던 중심부에 위치한 명문으로, 뇌과학 및 생명과학, 공중보건 분야에서 세계 최상위권의 연구 역량과 병원 인프라를 갖추고 있습니다.",
+                        link: "https://www.ucl.ac.uk/prospective-students/graduate/"
+                    },
+                    { 
+                        name: "University of Bristol", 
+                        course: "MSc Psychology (Conversion) / Applied Neuropsychology",
+                        rank: "세계 55위 (심리학/보건 영국 Top 10)", 
+                        location: "브리스톨 (Bristol, 잉글랜드 남서부)",
+                        tuition: "약 £30,000 ~ £33,000",
+                        desc: "비전공자를 위한 심리학 석사(Conversion - BPS 인증) 과정이 매우 우수하며, 응용 신경심리학 등 세부 전공에서도 뛰어난 성과를 보여줍니다.",
+                        link: "https://www.bristol.ac.uk/study/postgraduate/"
+                    }
+                ]
+            },
+            "교육학 / TESOL / 법학(LLM) / 스포츠": {
+                desc: "영어 교육의 본고장에서 배우는 TESOL 및 교육학, 국제법과 상법 중심의 LLM, 그리고 프리미어리그의 영향을 받은 스포츠 경영(Sports Management) 등 특화된 전문직 학문입니다.",
+                schools: [
+                    { 
+                        name: "Loughborough University", 
+                        course: "MSc Sport Management",
+                        rank: "스포츠 관련 학과 부동의 세계 1위", 
+                        location: "러프버러 (Loughborough, 잉글랜드 중부)",
+                        tuition: "약 £31,000 ~ £33,000",
+                        desc: "수년 연속 스포츠 관련 전공 세계 1위를 차지하고 있으며, 올림픽 선수촌 수준의 시설과 글로벌 스포츠 기업들과의 압도적인 네트워크를 자랑합니다.",
+                        link: "https://www.lboro.ac.uk/study/postgraduate/"
+                    },
+                    { 
+                        name: "University of Leeds", 
+                        course: "MA TESOL / LLM International Law",
+                        rank: "세계 75위 (러셀그룹)", 
+                        location: "리즈 (Leeds, 잉글랜드 북부)",
+                        tuition: "약 £26,000 ~ £28,000",
+                        desc: "교육학 및 영어교육(TESOL), 법학(LLM) 분야에서 영국 상위권에 위치하며, 다양한 모듈 선택권을 통해 학생 맞춤형 커리큘럼을 제공합니다.",
+                        link: "https://www.leeds.ac.uk/masters-courses"
+                    }
+                ]
+            }
+        };
+
+        const questions = [
+            {
+                key: "english",
+                q: "현재 보유하신 공인 영어 성적(IELTS, TOEFL 등)이 있으신가요?",
+                options: [
+                    { label: "IELTS 7.0 이상 (안정권)", value: "IELTS 7.0 이상" },
+                    { label: "IELTS 6.0 ~ 6.5 (보완/프리세셔널)", value: "IELTS 6.0~6.5" },
+                    { label: "IELTS 5.5 이하 / 아직 준비 전", value: "준비 전" }
+                ]
+            },
+            {
+                key: "gpa",
+                q: "학부(대학교) 최종 성적(GPA)은 어느 정도이신가요? (4.5 만점 기준)",
+                options: [
+                    { label: "4.0 이상 (매우 우수)", value: "4.0 이상" },
+                    { label: "3.5 ~ 3.9 (양호/보통)", value: "3.5~3.9" },
+                    { label: "3.0 ~ 3.4 (보완 필요)", value: "3.0~3.4" },
+                    { label: "3.0 미만 (패스웨이 고려)", value: "3.0 미만" }
+                ]
+            },
+            {
+                key: "major",
+                q: "영국 석사 과정에서 희망하시는 세부 전공 분야를 선택해주세요.",
+                options: Object.keys(majorData).map(k => ({ label: k, value: k }))
+            },
+            {
+                key: "sameMajor",
+                q: "지원하실 석사 전공이 학부 때 전공하신 분야와 동일한가요?",
+                options: [
+                    { label: "네, 동일/유사 전공입니다 (전공자)", value: "전공자" },
+                    { label: "아니요, 분야를 바꿉니다 (비전공자)", value: "비전공자" }
+                ]
+            },
+            {
+                key: "target",
+                q: "진학 시 가장 중요하게 생각하시는 목표나 기준은 무엇인가요?",
+                options: [
+                    { label: "세계 랭킹 최상위권 (명성 위주)", value: "세계 랭킹 우선" },
+                    { label: "전공별 랭킹 및 실무/취업 연계", value: "실무 및 취업 연계" },
+                    { label: "나의 성적에 맞춘 가장 안정적인 합격", value: "안정성 우선" }
+                ]
+            }
+        ];
+
+        function startConsulting() {
+            document.getElementById('hero-section').style.display = 'none';
+            const chatSection = document.getElementById('chat-section');
+            chatSection.style.display = 'flex';
+            chatSection.classList.add('fade-in-up');
+            
+            addChatBubble('ai', '안녕하세요. edm유학센터 AI 컨설턴트입니다.<br>최신 2026-27년 영국 대학 데이터를 바탕으로, 성공적인 석사 진학을 위한 맞춤형 분석을 시작합니다.');
+            setTimeout(askQuestion, 800);
+        }
+
+        function addChatBubble(sender, text) {
+            const history = document.getElementById('chat-history');
+            const wrap = document.createElement('div');
+            wrap.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} fade-in-up`;
+            
+            let bubbleHTML = '';
+            if (sender === 'ai') {
+                bubbleHTML = `
+                    <div class="flex gap-3 max-w-[90%] md:max-w-[80%]">
+                        <div class="w-10 h-10 rounded-full bg-apple-gray flex items-center justify-center text-apple-dark shrink-0">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="chat-bubble-ai px-5 py-3.5 text-[15px] leading-relaxed shadow-sm">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            } else {
+                bubbleHTML = `
+                    <div class="chat-bubble-user px-5 py-3.5 text-[15px] leading-relaxed shadow-sm max-w-[85%] font-medium">
+                        ${text}
+                    </div>
+                `;
+            }
+            
+            wrap.innerHTML = bubbleHTML;
+            history.appendChild(wrap);
+            
+            const chatContainer = document.getElementById('chat-history');
+            chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+        }
+
+        function askQuestion() {
+            if (step < questions.length) {
+                const q = questions[step];
+                addChatBubble('ai', q.q);
+                
+                const optsContainer = document.getElementById('options-container');
+                optsContainer.innerHTML = '';
+                
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'pill-btn bg-[#2d2d2f] text-[#f5f5f7] border border-[#3d3d40] hover:bg-apple-blue hover:border-apple-blue py-3.5 px-4 font-medium shadow-sm text-[14px] md:text-[15px] text-center w-full';
+                    btn.innerText = opt.label;
+                    btn.onclick = () => handleAnswer(opt.value, opt.label);
+                    optsContainer.appendChild(btn);
+                });
+            } else {
+                document.getElementById('options-container').innerHTML = '';
+                addChatBubble('ai', '정보 입력이 완료되었습니다. 최신 26/27 영국 대학 입시 알고리즘을 통해 결과를 분석 중입니다...');
+                setTimeout(showResult, 2000);
+            }
+        }
+
+        function handleAnswer(value, label) {
+            addChatBubble('user', label);
+            document.getElementById('options-container').innerHTML = '';
+            
+            const currentQ = questions[step];
+            currentState[currentQ.key] = value;
+            step++;
+            
+            setTimeout(askQuestion, 600);
+        }
+
+        function showResult() {
+            document.getElementById('chat-section').style.display = 'none';
+            const resultSection = document.getElementById('result-section');
+            resultSection.style.display = 'block';
+            resultSection.classList.add('fade-in-up');
+
+            let isPreMaster = false;
+            let pathwayReason = "";
+
+            if (currentState.gpa.includes("3.0 미만") || currentState.gpa.includes("3.0~3.4")) {
+                isPreMaster = true;
+                pathwayReason = "학점(GPA) 보완이 필요하며, ";
+            }
+            if (currentState.sameMajor === "비전공자") {
+                isPreMaster = true;
+                pathwayReason += "학부와 석사 전공이 상이하여 기초 선수과목 이수가 강력히 권장됩니다. (단, 비즈니스/마케팅, 심리학 Conversion 과정 등 일부 전공은 Direct 지원이 예외적으로 가능할 수 있습니다).";
+            }
+
+            const pathwayTitle = isPreMaster ? "Pre-Master (석사 예비과정)" : "Direct (석사 직행 과정)";
+            const pathwaySub = isPreMaster 
+                ? "성적 및 전공의 차이를 극복하고 명문대 진학을 보장받는 가장 확실한 루트입니다."
+                : "우수한 성적과 전공 적합성을 바탕으로 1년 만에 석사 학위를 취득하는 효율적인 루트입니다.";
+            const videoId = isPreMaster ? 'X6fYNqnDMOs' : 'PtiGt4klCqc';
+
+            const majorInfo = majorData[currentState.major];
+
+            let html = `
+                <!-- Top Summary (Dark) -->
+                <div class="section-dark pt-24 pb-16 px-4">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <span class="inline-block py-1 px-3 border border-gray-600 rounded-full text-xs font-semibold tracking-widest text-gray-300 mb-6 uppercase">AI Analysis Complete</span>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-apple-tighter mb-6 leading-tight">
+                            당신을 위한 최적의 진학 경로는<br>
+                            <span class="text-apple-blue">"${pathwayTitle}"</span> 입니다.
+                        </h2>
+                        <p class="text-lg text-gray-400 max-w-2xl mx-auto font-light leading-relaxed mb-6">
+                            ${pathwaySub}
+                        </p>
+                        ${isPreMaster ? `
+                        <div class="bg-[#1d1d1f] rounded-2xl p-6 text-left border border-[#2d2d2f] max-w-2xl mx-auto mb-8">
+                            <p class="text-sm text-gray-300 leading-relaxed"><strong class="text-white">진단 사유:</strong> ${pathwayReason}<br><br>프리마스터를 이수할 경우, 아카데믹 영어 실력 향상은 물론 논문 작성법(Research Skill)을 미리 익힐 수 있어 본 과정 진학 후 우수한 성적을 거두는 데 매우 유리합니다.</p>
+                        </div>
+                        ` : `
+                        <div class="bg-[#1d1d1f] rounded-2xl p-6 text-left border border-[#2d2d2f] max-w-2xl mx-auto mb-8">
+                            <p class="text-sm text-gray-300 leading-relaxed"><strong class="text-white">진단 사유:</strong> 지원 전공에 대한 높은 적합성과 양호한 성적을 보유하고 있습니다. 학업계획서(SOP)와 이력서(CV)에 본인만의 스토리를 전략적으로 담아 명문대 Direct 입학을 정조준합니다.</p>
+                        </div>
+                        `}
+                    </div>
+                </div>
+
+                <!-- Major Description (Light) -->
+                <div class="section-light py-20 px-4">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="text-center mb-16">
+                            <h3 class="text-3xl md:text-4xl font-bold tracking-apple-tighter mb-4 text-apple-black">전공 분석 및 추천 대학</h3>
+                            <p class="text-lg text-apple-light-gray max-w-3xl mx-auto leading-relaxed">
+                                선택하신 <strong class="text-apple-dark">${currentState.major}</strong> 전공은 ${majorInfo.desc}
+                            </p>
+                        </div>
+
+                        <!-- University Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                            ${majorInfo.schools.map(school => `
+                                <div class="apple-card p-8 md:p-10 flex flex-col h-full">
+                                    <h4 class="text-2xl font-bold text-apple-black tracking-tight mb-1">${school.name}</h4>
+                                    <p class="text-apple-blue font-medium mb-4 text-sm">${school.course}</p>
+                                    
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <div class="info-badge">
+                                            <i class="fa-solid fa-trophy text-yellow-500 mr-2 text-xs"></i> ${school.rank}
+                                        </div>
+                                        <div class="info-badge">
+                                            <i class="fa-solid fa-location-dot text-gray-400 mr-2 text-xs"></i> ${school.location}
+                                        </div>
+                                        <div class="info-badge">
+                                            <i class="fa-solid fa-sterling-sign text-gray-400 mr-2 text-xs"></i> 26/27학비: ${school.tuition}
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-[15px] text-gray-600 leading-relaxed mb-8 flex-grow">
+                                        ${school.desc}
+                                    </p>
+                                    
+                                    <a href="${school.link}" target="_blank" class="uni-link-banner text-center font-semibold py-3.5 px-4 w-full flex items-center justify-center gap-2 text-[15px]">
+                                        대학 상세 페이지 보기 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Guideline (Dark) -->
+                <div class="section-dark py-24 px-4 border-t border-gray-800">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h2 class="text-3xl md:text-4xl font-bold tracking-apple-tighter mb-4">필수 시청 영상 가이드</h2>
+                        <p class="text-gray-400 font-light mb-12 text-lg">AI가 현재 상황에 가장 알맞은 edm유학센터 전문 영상을 추천합니다.</p>
+                        <div class="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl bg-[#1d1d1f] border border-gray-800">
+                            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-[250px] sm:h-[400px] md:h-[500px]"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final CTA (Light) -->
+                <div class="section-light py-24 px-4 text-center">
+                    <div class="max-w-3xl mx-auto">
+                        <h2 class="text-4xl font-bold tracking-apple-tighter mb-6 text-apple-black">완벽한 준비는 전문가와 함께.</h2>
+                        <p class="text-lg text-gray-600 mb-10 leading-relaxed">
+                            위 결과는 2026-27 데이터에 기반한 1차 진단입니다.<br class="hidden sm:block">실제 합격 가능성을 높이는 세부 입시 요강 분석과 전략은 무료 컨설팅을 통해 확인하세요.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <a href="https://jaebong-choi.github.io/aistudyabroad/" target="_blank" class="pill-btn bg-apple-blue hover:bg-apple-blue-hover text-white px-8 py-4 text-lg font-medium w-full sm:w-auto shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-1">
+                                전문가 무료 상담 예약
+                            </a>
+                            <a href="tel:1833-2341" class="pill-btn bg-white border border-gray-300 text-apple-dark hover:bg-gray-50 px-8 py-4 text-lg font-medium w-full sm:w-auto inline-flex items-center justify-center gap-2 transition-all">
+                                <i class="fa-solid fa-phone text-sm"></i> 1833-2341
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="bg-[#e8e8ed] py-10 text-center">
+                    <img src="https://s3.ap-northeast-2.amazonaws.com/img.edmuhak.com/uhak/renewal/common/edmuhak_logo.svg" alt="edm education" class="h-5 mx-auto mb-4 opacity-50 grayscale">
+                    <p class="text-xs text-gray-500 font-medium">ⓒ edm education. All rights reserved. Designed for 2026-27 UK Admissions.</p>
+                </footer>
+            `;
+
+            resultSection.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
