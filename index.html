@@ -181,6 +181,38 @@
         let currentState = {};
         let step = 0;
 
+        // 공통 옵션 버튼 스타일
+        const OPT_BTN_CLASS = 'pill-btn bg-[#2d2d2f] text-[#f5f5f7] border border-[#3d3d40] hover:bg-apple-blue hover:border-apple-blue py-3.5 px-4 font-medium shadow-sm text-[14px] md:text-[15px] text-center w-full';
+
+        // TOEFL iBT -> IELTS 환산 (레퍼런스 표 기준)
+        function toeflToIelts(s) {
+            if (s >= 118) return 9.0;
+            if (s >= 115) return 8.5;
+            if (s >= 110) return 8.0;
+            if (s >= 102) return 7.5;
+            if (s >= 94)  return 7.0;
+            if (s >= 79)  return 6.5;
+            if (s >= 60)  return 6.0;
+            if (s >= 46)  return 5.5;
+            if (s >= 35)  return 5.0;
+            if (s >= 32)  return 4.5;
+            return 4.0; // 0~31 => IELTS 4.0 이하
+        }
+
+        // PTE Academic(Updated) -> IELTS 환산 (레퍼런스 표 기준)
+        function pteToIelts(s) {
+            if (s >= 89) return 8.5;
+            if (s >= 84) return 8.0;
+            if (s >= 76) return 7.5;
+            if (s >= 66) return 7.0;
+            if (s >= 56) return 6.5;
+            if (s >= 46) return 6.0;
+            if (s >= 36) return 5.5;
+            if (s >= 29) return 5.0;
+            if (s >= 23) return 4.5;
+            return 4.0; // 22 이하 => IELTS 4.0 이하
+        }
+
         // 2026-27 Detailed Major Data with Descriptions, Course Names, Official Links, Locations and Tuitions
         const majorData = {
             "비즈니스 / 마케팅 / 경영": {
@@ -349,11 +381,12 @@
         const questions = [
             {
                 key: "english",
-                q: "현재 보유하신 공인 영어 성적(IELTS, TOEFL 등)이 있으신가요?",
+                q: "현재 보유하신 공인 영어 성적(IELTS, TOEFL, PTE 등)이 있으신가요?<br><span class=\"block mt-3 text-[13px] text-gray-500 leading-relaxed\">※ 영국 대학은 총점뿐 아니라 각 영역별(Writing/Speaking 등) 세부 점수를 함께 보기 때문에, 최종 합격 가능 여부는 정확한 점수 확인이 필요합니다.</span>",
                 options: [
                     { label: "IELTS 7.0 이상 (안정권)", value: "IELTS 7.0 이상" },
                     { label: "IELTS 6.0 ~ 6.5 (보완/프리세셔널)", value: "IELTS 6.0~6.5" },
-                    { label: "IELTS 5.5 이하 / 아직 준비 전", value: "준비 전" }
+                    { label: "IELTS 5.5 이하 / 아직 준비 전", value: "준비 전" },
+                    { label: "기타 (TOEFL · PTE 등 다른 시험)", value: "__other__" }
                 ]
             },
             {
@@ -442,7 +475,7 @@
                 
                 q.options.forEach(opt => {
                     const btn = document.createElement('button');
-                    btn.className = 'pill-btn bg-[#2d2d2f] text-[#f5f5f7] border border-[#3d3d40] hover:bg-apple-blue hover:border-apple-blue py-3.5 px-4 font-medium shadow-sm text-[14px] md:text-[15px] text-center w-full';
+                    btn.className = OPT_BTN_CLASS;
                     btn.innerText = opt.label;
                     btn.onclick = () => handleAnswer(opt.value, opt.label);
                     optsContainer.appendChild(btn);
@@ -455,14 +488,107 @@
         }
 
         function handleAnswer(value, label) {
+            // '기타' 선택 시: TOEFL/PTE 점수를 입력받아 IELTS로 환산
+            if (value === '__other__') {
+                addChatBubble('user', label);
+                document.getElementById('options-container').innerHTML = '';
+                addChatBubble('ai', '보유하신 시험 종류를 선택해주세요. 입력하신 총점을 IELTS 밴드로 환산해 드립니다.');
+                setTimeout(renderTestTypeChoice, 500);
+                return;
+            }
+
             addChatBubble('user', label);
             document.getElementById('options-container').innerHTML = '';
-            
+
             const currentQ = questions[step];
             currentState[currentQ.key] = value;
             step++;
-            
+
             setTimeout(askQuestion, 600);
+        }
+
+        // 시험 종류 선택 (TOEFL / PTE)
+        function renderTestTypeChoice() {
+            const c = document.getElementById('options-container');
+            c.innerHTML = '';
+
+            [['TOEFL iBT (0~120)', 'TOEFL'], ['PTE Academic (10~90)', 'PTE']].forEach(([lbl, type]) => {
+                const b = document.createElement('button');
+                b.className = OPT_BTN_CLASS;
+                b.innerText = lbl;
+                b.onclick = () => renderScoreInput(type);
+                c.appendChild(b);
+            });
+
+            const back = document.createElement('button');
+            back.className = 'pill-btn bg-transparent text-gray-400 border border-[#3d3d40] hover:bg-[#2d2d2f] py-3.5 px-4 font-medium text-[14px] md:text-[15px] w-full sm:col-span-2';
+            back.innerText = '← IELTS 성적 선택으로 돌아가기';
+            back.onclick = () => {
+                c.innerHTML = '';
+                questions[step].options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = OPT_BTN_CLASS;
+                    btn.innerText = opt.label;
+                    btn.onclick = () => handleAnswer(opt.value, opt.label);
+                    c.appendChild(btn);
+                });
+            };
+            c.appendChild(back);
+        }
+
+        // 점수 입력 UI
+        function renderScoreInput(testType) {
+            const c = document.getElementById('options-container');
+            c.innerHTML = '';
+
+            const min = testType === 'TOEFL' ? 0 : 10;
+            const max = testType === 'TOEFL' ? 120 : 90;
+
+            const wrap = document.createElement('div');
+            wrap.className = 'sm:col-span-2 flex flex-col gap-3';
+            wrap.innerHTML = `
+                <input id="engScoreInput" type="number" inputmode="numeric" min="${min}" max="${max}"
+                    placeholder="${testType} 총점을 입력하세요 (${min}~${max})"
+                    class="bg-[#2d2d2f] text-white border border-[#3d3d40] rounded-2xl py-3.5 px-5 text-[15px] focus:outline-none focus:border-apple-blue w-full placeholder-gray-500" />
+                <div class="flex gap-3">
+                    <button id="engConvertBtn" class="pill-btn bg-apple-blue hover:bg-apple-blue-hover text-white py-3.5 px-4 font-medium text-[15px] flex-1">IELTS로 환산하기</button>
+                    <button id="engBackBtn" class="pill-btn bg-[#2d2d2f] text-gray-300 border border-[#3d3d40] hover:bg-[#3d3d40] py-3.5 px-5 font-medium text-[15px]">← 뒤로</button>
+                </div>
+            `;
+            c.appendChild(wrap);
+
+            const inp = document.getElementById('engScoreInput');
+            document.getElementById('engConvertBtn').onclick = () => convertEnglish(testType);
+            document.getElementById('engBackBtn').onclick = renderTestTypeChoice;
+            inp.addEventListener('keydown', e => { if (e.key === 'Enter') convertEnglish(testType); });
+            inp.focus();
+        }
+
+        // 환산 실행 및 다음 질문으로 진행
+        function convertEnglish(testType) {
+            const inp = document.getElementById('engScoreInput');
+            const min = testType === 'TOEFL' ? 0 : 10;
+            const max = testType === 'TOEFL' ? 120 : 90;
+            const raw = parseFloat(inp.value);
+
+            if (isNaN(raw) || raw < min || raw > max) {
+                inp.classList.add('border-red-500');
+                inp.focus();
+                return;
+            }
+
+            const band = testType === 'TOEFL' ? toeflToIelts(raw) : pteToIelts(raw);
+            const bandLabel = band >= 4.5 ? ('IELTS ' + band.toFixed(1)) : 'IELTS 4.0 이하';
+
+            document.getElementById('options-container').innerHTML = '';
+            addChatBubble('user', `${testType} ${raw}점`);
+            addChatBubble('ai',
+                `${testType} ${raw}점은 <strong class="text-white">${bandLabel}</strong> 수준으로 환산됩니다.<br>` +
+                `<span class="block mt-2 text-[13px] text-gray-400 leading-relaxed">※ 환산 점수는 참고용입니다. 영국 대학은 각 영역별 세부 점수까지 확인하기 때문에, 정확한 지원 가능 여부는 별도 확인이 필요합니다.</span>`);
+
+            currentState.english = `${testType} ${raw} (${bandLabel} 환산)`;
+            step++;
+            setTimeout(askQuestion, 900);
         }
 
         function showResult() {
