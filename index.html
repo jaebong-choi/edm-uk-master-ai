@@ -101,6 +101,18 @@
             color: #0071e3;
         }
 
+        .edm-link-banner {
+            background-color: #eaf2fd;
+            color: #0071e3;
+            border: 1px solid #cfe3fb;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .edm-link-banner:hover {
+            background-color: #0071e3;
+            color: #ffffff;
+        }
+
         .info-badge {
             display: inline-flex;
             align-items: center;
@@ -213,170 +225,527 @@
             return 4.0; // 22 이하 => IELTS 4.0 이하
         }
 
-        // 2026-27 Detailed Major Data with Descriptions, Course Names, Official Links, Locations and Tuitions
+        // 2026-27 전공/학교 데이터 — edm유학센터 영국 전공별 학교 분류 참고
+        // (https://www.edmuhak.com/university-abroad/uk/major-school-list)
+        // 계열 → 세부 전공 2단계 구조. 각 학교에 edm유학센터 대학 안내 페이지 링크(edm) 포함.
+        const majorCategories = {
+            "경영 / 미디어 / 서비스 계열": ["경영학 / MBA", "마케팅", "회계 / 재무", "미디어 / 커뮤니케이션", "스포츠 경영"],
+            "공학 / IT 계열": ["컴퓨터과학 / IT", "데이터사이언스 / AI", "사이버보안", "기계 / 항공우주공학", "토목 / 구조공학", "전기 / 전자공학"],
+            "인문 / 사회 / 교육 계열": ["국제개발학", "공공정책 / 행정 (MPA)", "법학 (LLM)", "TESOL / 교육학", "박물관학 / 예술경영"],
+            "의생명 / 헬스케어 계열": ["생의과학 / 바이오", "심리학 (Conversion 포함)", "공중보건 (Public Health)"]
+        };
+
         const majorData = {
-            "비즈니스 / 마케팅 / 경영": {
-                desc: "기업의 데이터와 시장을 분석하여 비즈니스 방향을 예측하고 의사결정을 내리는 현대 경영의 핵심 분야입니다. MBA, Business Analytics, Marketing, HR, Supply Chain Management 등이 포함되며 실무 연계가 뛰어납니다.",
+            "경영학 / MBA": {
+                desc: "기업의 데이터와 시장을 분석하여 비즈니스 방향을 예측하고 의사결정을 내리는 현대 경영의 핵심 분야입니다. MBA, Management, Business Analytics 등이 포함되며 실무 연계가 뛰어납니다.",
                 schools: [
-                    { 
-                        name: "University of Warwick", 
+                    {
+                        name: "University of Warwick",
                         course: "MSc Business with Marketing / MSc Business Analytics",
-                        rank: "세계 67위 / 영국 9위 (비즈니스 초강세)",
+                        rank: "세계 74위 / 영국 10위 (QS 2026, 비즈니스 초강세)",
                         location: "코번트리 (Coventry, 잉글랜드 중부)",
                         tuition: "약 £35,000 ~ £38,000",
                         desc: "Warwick Business School(WBS)은 세계 1%에 해당하는 Triple Crown 인증을 받은 명문입니다. 리서치뿐만 아니라 강력한 산학연계 커리어 센터를 운영합니다.",
-                        link: "https://www.wbs.ac.uk/courses/postgraduate/"
+                        link: "https://www.wbs.ac.uk/courses/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/334"
                     },
-                    { 
-                        name: "University of Manchester", 
-                        course: "MSc Marketing / MSc Management",
-                        rank: "세계 32위 / 영국 6위 (러셀그룹)", 
+                    {
+                        name: "University of Manchester",
+                        course: "MSc Management / MSc International Business",
+                        rank: "세계 35위 (QS 2026, 러셀그룹)",
                         location: "맨체스터 (Manchester, 잉글랜드 북서부)",
                         tuition: "약 £33,000 ~ £36,000",
                         desc: "Alliance MBS는 영국 최대 규모의 비즈니스 스쿨 중 하나로, 철저한 실무 중심의 산학 연계 프로젝트(Business in Practice)를 제공합니다.",
-                        link: "https://www.alliancembs.manchester.ac.uk/study/masters/"
+                        link: "https://www.alliancembs.manchester.ac.uk/study/masters/",
+                        edm: "https://www.edmuhak.com/school/242"
                     }
                 ]
             },
-            "IT / 데이터 사이언스 / 사이버보안": {
-                desc: "4차 산업혁명의 핵심인 빅데이터, 인공지능, 그리고 사이버 보안을 다룹니다. 데이터 수집부터 시각화, 해킹 방어 체계 구축까지 미래 유망 IT 산업 전반의 고도화된 기술을 학습합니다.",
+            "마케팅": {
+                desc: "소비자 심리와 데이터 분석을 기반으로 브랜드 전략, 광고, 디지털 마케팅을 설계하는 분야입니다. 영국 석사는 1년 과정으로 글로벌 마케팅 실무 역량을 압축적으로 키울 수 있습니다.",
                 schools: [
-                    { 
-                        name: "University of Edinburgh", 
-                        course: "MSc Data Science / MSc Artificial Intelligence",
-                        rank: "세계 22위 / 영국 5위 (CS 분야 유럽 최고 수준)", 
-                        location: "에든버러 (Edinburgh, 스코틀랜드)",
-                        tuition: "약 £38,500 ~ £42,000",
-                        desc: "인포매틱스 분야에서 영국 최고 수준의 연구 성과를 자랑하며, 인공지능과 빅데이터 분야에서 스코틀랜드와 유럽의 선두주자입니다.",
-                        link: "https://www.ed.ac.uk/informatics/postgraduate"
+                    {
+                        name: "University of Manchester",
+                        course: "MSc Marketing",
+                        rank: "세계 35위 (QS 2026, 러셀그룹)",
+                        location: "맨체스터 (Manchester, 잉글랜드 북서부)",
+                        tuition: "약 £32,000 ~ £35,000",
+                        desc: "Alliance MBS의 마케팅 석사는 소비자 행동, 브랜드 관리, 디지털 마케팅을 아우르며 글로벌 기업과의 라이브 프로젝트 기회가 풍부합니다.",
+                        link: "https://www.alliancembs.manchester.ac.uk/study/masters/",
+                        edm: "https://www.edmuhak.com/school/242"
                     },
-                    { 
-                        name: "King's College London (KCL)", 
-                        course: "MSc Cyber Security / MSc Data Science",
-                        rank: "세계 40위 / 영국 7위", 
-                        location: "런던 (London, 중심부)",
-                        tuition: "약 £35,000 ~ £39,000",
-                        desc: "런던 중심부에 위치하여 금융권 및 글로벌 IT 기업들과의 네트워크가 뛰어납니다. 복잡한 시스템의 보안 및 데이터 알고리즘 연구에 특화되어 있습니다.",
-                        link: "https://www.kcl.ac.uk/study/postgraduate-taught"
+                    {
+                        name: "University of Leeds",
+                        course: "MA Advertising and Marketing",
+                        rank: "세계 86위 / 영국 13위 (QS 2026, 러셀그룹)",
+                        location: "리즈 (Leeds, 잉글랜드 북부)",
+                        tuition: "약 £28,000 ~ £30,000",
+                        desc: "Leeds University Business School의 대표 인기 과정으로, 광고 기획과 마케팅 전략을 균형 있게 다루며 실무 포트폴리오 중심 커리큘럼을 운영합니다.",
+                        link: "https://www.leeds.ac.uk/masters-courses",
+                        edm: "https://www.edmuhak.com/school/367"
                     }
                 ]
             },
-            "공학 (항공/자동차/토목/화학)": {
-                desc: "인류의 생활환경(토목/건축)부터 최첨단 모빌리티(항공우주/자동차), 그리고 신소재 및 에너지(화학공학)까지 다루는 산업의 근간입니다. 영국은 전통적으로 공학 분야에서 세계적인 산학협력 네트워크를 갖추고 있습니다.",
+            "회계 / 재무": {
+                desc: "기업 재무제표 분석, 투자, 금융시장 운용을 다루는 분야로 ACCA·CFA 등 국제 자격과의 연계가 뛰어납니다. 런던 금융가(City) 취업을 목표로 하는 유학생에게 가장 선호되는 전공 중 하나입니다.",
                 schools: [
-                    { 
-                        name: "Cranfield University", 
-                        course: "MSc Aerospace Engineering / Automotive Engineering",
-                        rank: "항공우주 분야 영국 1위 (대학원 중심 대학)",
-                        location: "크랜필드 (Cranfield, 잉글랜드 베드퍼드셔)",
-                        tuition: "약 £28,000 ~ £30,000", 
-                        desc: "영국 내 유일하게 공항을 자체 소유한 대학원으로, Rolls-Royce, BAE Systems 등 글로벌 항공/자동차 기업들과의 독보적인 공동 프로젝트를 진행합니다.",
-                        link: "https://www.cranfield.ac.uk/themes/aerospace"
+                    {
+                        name: "University of Bath",
+                        course: "MSc Accounting and Finance",
+                        rank: "세계 132위 / 영국 20위 (QS 2026, 경영 명문)",
+                        location: "바스 (Bath, 잉글랜드 남서부)",
+                        tuition: "약 £31,000 ~ £34,000",
+                        desc: "Bath School of Management는 영국 내 취업률 최상위권 비즈니스 스쿨로, 회계·재무 분야에서 탄탄한 커리큘럼과 금융권 네트워크를 자랑합니다.",
+                        link: "https://www.bath.ac.uk/",
+                        edm: "https://www.edmuhak.com/school/225"
                     },
-                    { 
-                        name: "University of Sheffield", 
-                        course: "MSc Civil Engineering / MSc Mechanical Engineering",
-                        rank: "세계 104위 (공대 리서치 영국 최상위권)",
-                        location: "셰필드 (Sheffield, 잉글랜드 중북부)",
-                        tuition: "약 £30,000 ~ £32,000", 
-                        desc: "러셀그룹 소속으로, 특히 토목공학과 기계공학 분야에서 탁월한 연구 실적과 첨단 실험 시설(Diamond 건물)을 보유하고 있습니다.",
-                        link: "https://www.sheffield.ac.uk/engineering"
+                    {
+                        name: "Lancaster University",
+                        course: "MSc Accounting and Financial Management",
+                        rank: "Triple Crown 인증 LUMS 보유 (영국 상위권)",
+                        location: "랭커스터 (Lancaster, 잉글랜드 북서부)",
+                        tuition: "약 £28,000 ~ £31,000",
+                        desc: "Lancaster University Management School(LUMS)은 세계 1% Triple Crown 인증 비즈니스 스쿨로, 회계·재무 리서치 분야에서 영국 최상위권 평가를 받습니다.",
+                        link: "https://www.lancaster.ac.uk/study/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/241"
                     }
                 ]
             },
-            "사회과학 (공공정책/개발학/행정)": {
-                desc: "환경, 빈곤, 국제관계 등 글로벌 이슈를 연구하는 개발학과 국가 발전의 틀을 짜는 행정학(MPA), 공공정책학을 다룹니다. 특히 공무원 국비 유학으로 가장 선호되는 분야입니다.",
+            "미디어 / 커뮤니케이션": {
+                desc: "미디어 종주국인 영국의 선진화된 커뮤니케이션 이론과 저널리즘 실무, 문화 콘텐츠 산업 전략을 심도 있게 탐구하는 분야입니다.",
                 schools: [
-                    { 
-                        name: "University of Sussex", 
-                        course: "MA Development Studies",
-                        rank: "개발학(Development Studies) 부동의 세계 1위",
-                        location: "브라이튼 (Brighton, 잉글랜드 남부)",
-                        tuition: "약 £23,000 ~ £25,000", 
-                        desc: "수년간 하버드, 옥스퍼드를 제치고 개발학 분야 세계 1위를 수성하고 있는 명실상부한 최고 명문으로, UN 등 국제기구 진출에 유리합니다.",
-                        link: "https://www.sussex.ac.uk/study/masters/global-studies"
-                    },
-                    { 
-                        name: "University of York", 
-                        course: "Master of Public Administration (MPA)",
-                        rank: "사회정책 및 행정학 영국 내 Top 10", 
-                        location: "요크 (York, 잉글랜드 북부)",
-                        tuition: "약 £24,000 ~ £26,000",
-                        desc: "공공정책(Public Policy) 및 행정학(MPA) 분야에서 뛰어난 성과를 내고 있으며, 한국 공무원 및 정부 산하기관 임직원들이 가장 선호하는 대학 중 하나입니다.",
-                        link: "https://www.york.ac.uk/study/postgraduate/courses/"
-                    }
-                ]
-            },
-            "미디어 / 저널리즘 / 박물관학": {
-                desc: "미디어 종주국인 영국의 선진화된 커뮤니케이션 이론과 저널리즘 실무, 그리고 예술경영과 박물관학(Museum Studies)을 심도 있게 탐구하는 문화/예술 융합 학문입니다.",
-                schools: [
-                    { 
-                        name: "Goldsmiths, University of London", 
+                    {
+                        name: "Goldsmiths, University of London",
                         course: "MA Media & Communications",
-                        rank: "미디어 & 커뮤니케이션 세계 12위", 
+                        rank: "미디어 & 커뮤니케이션 세계 12위 (QS 전공랭킹)",
                         location: "런던 (London, 잉글랜드)",
                         tuition: "약 £24,000 ~ £26,000",
                         desc: "창의적이고 혁신적인 런던대 소속 대학으로, 미디어, 문화연구, 예술 분야에서 세계적인 명성을 구가하며 수많은 미디어계 거장을 배출했습니다.",
-                        link: "https://www.gold.ac.uk/pg/"
+                        link: "https://www.gold.ac.uk/pg/",
+                        edm: "https://www.edmuhak.com/school/722"
                     },
-                    { 
-                        name: "University of Leicester", 
-                        course: "MA/MSc Museum Studies",
-                        rank: "박물관학(Museum Studies) 압도적 세계 선두", 
-                        location: "레스터 (Leicester, 잉글랜드 중부)",
-                        tuition: "약 £22,000 ~ £24,000",
-                        desc: "박물관학 분야에서 가장 오랜 역사와 최고 수준의 연구 실적을 자랑하며, 전 세계 박물관 및 갤러리와 광범위한 산학연계(Placement)를 맺고 있습니다.",
-                        link: "https://le.ac.uk/museum-studies"
+                    {
+                        name: "King's College London (KCL)",
+                        course: "MA Cultural & Creative Industries",
+                        rank: "세계 31위 (QS 2026, 러셀그룹)",
+                        location: "런던 (London, 중심부)",
+                        tuition: "약 £29,000 ~ £32,000",
+                        desc: "런던 중심부에 위치해 방송·출판·문화예술 산업과의 접점이 뛰어나며, 문화산업 정책과 콘텐츠 비즈니스를 아우르는 커리큘럼을 제공합니다.",
+                        link: "https://www.kcl.ac.uk/study/postgraduate-taught",
+                        edm: "https://www.edmuhak.com/school/279"
                     }
                 ]
             },
-            "보건 / 생물의학 / 심리학": {
-                desc: "인간의 신체적, 정신적 건강을 연구하는 분야입니다. 첨단 의공학(Biomedical)부터 공중보건(Public Health), 그리고 범죄/상담 심리학과 비전공자를 위한 심리학 전환(Conversion) 과정까지 포함합니다.",
+            "스포츠 경영": {
+                desc: "프리미어리그의 나라 영국에서 배우는 스포츠 비즈니스, 구단 경영, 스포츠 마케팅 분야입니다. 글로벌 스포츠 산업 전반의 경영 전략을 다룹니다.",
                 schools: [
-                    { 
-                        name: "University College London (UCL)", 
-                        course: "MSc Biomedical Science",
-                        rank: "세계 9위 / 생명과학 및 의학 세계 최상위", 
-                        location: "런던 (London, 블룸즈버리 중심)",
-                        tuition: "약 £35,000 ~ £40,000",
-                        desc: "런던 중심부에 위치한 명문으로, 뇌과학 및 생명과학, 공중보건 분야에서 세계 최상위권의 연구 역량과 병원 인프라를 갖추고 있습니다.",
-                        link: "https://www.ucl.ac.uk/prospective-students/graduate/"
-                    },
-                    { 
-                        name: "University of Bristol", 
-                        course: "MSc Psychology (Conversion) / Applied Neuropsychology",
-                        rank: "세계 55위 (심리학/보건 영국 Top 10)", 
-                        location: "브리스톨 (Bristol, 잉글랜드 남서부)",
-                        tuition: "약 £30,000 ~ £33,000",
-                        desc: "비전공자를 위한 심리학 석사(Conversion - BPS 인증) 과정이 매우 우수하며, 응용 신경심리학 등 세부 전공에서도 뛰어난 성과를 보여줍니다.",
-                        link: "https://www.bristol.ac.uk/study/postgraduate/"
-                    }
-                ]
-            },
-            "교육학 / TESOL / 법학(LLM) / 스포츠": {
-                desc: "영어 교육의 본고장에서 배우는 TESOL 및 교육학, 국제법과 상법 중심의 LLM, 그리고 프리미어리그의 영향을 받은 스포츠 경영(Sports Management) 등 특화된 전문직 학문입니다.",
-                schools: [
-                    { 
-                        name: "Loughborough University", 
+                    {
+                        name: "Loughborough University",
                         course: "MSc Sport Management",
-                        rank: "스포츠 관련 학과 부동의 세계 1위", 
+                        rank: "스포츠 관련 학과 부동의 세계 1위 (QS 전공랭킹)",
                         location: "러프버러 (Loughborough, 잉글랜드 중부)",
                         tuition: "약 £31,000 ~ £33,000",
                         desc: "수년 연속 스포츠 관련 전공 세계 1위를 차지하고 있으며, 올림픽 선수촌 수준의 시설과 글로벌 스포츠 기업들과의 압도적인 네트워크를 자랑합니다.",
-                        link: "https://www.lboro.ac.uk/study/postgraduate/"
+                        link: "https://www.lboro.ac.uk/study/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/346"
                     },
-                    { 
-                        name: "University of Leeds", 
-                        course: "MA TESOL / LLM International Law",
-                        rank: "세계 75위 (러셀그룹)", 
+                    {
+                        name: "University of Birmingham",
+                        course: "MSc Sport Policy, Business and Management",
+                        rank: "세계 76위 (QS 2026, 러셀그룹)",
+                        location: "버밍엄 (Birmingham, 잉글랜드 중부)",
+                        tuition: "약 £27,000 ~ £29,000",
+                        desc: "스포츠 정책과 비즈니스를 함께 다루는 균형 잡힌 커리큘럼으로, 러셀그룹 명문에서 스포츠 산업 경영 전문성을 쌓을 수 있습니다.",
+                        link: "https://www.birmingham.ac.uk/postgraduate",
+                        edm: "https://www.edmuhak.com/school/2059"
+                    }
+                ]
+            },
+            "컴퓨터과학 / IT": {
+                desc: "소프트웨어 개발, 알고리즘, 시스템 설계를 다루는 IT 산업의 근간 분야입니다. 영국은 유럽 최대 테크 허브(런던)를 중심으로 졸업 후 취업 기회가 풍부합니다.",
+                schools: [
+                    {
+                        name: "University College London (UCL)",
+                        course: "MSc Computer Science",
+                        rank: "세계 9위 (QS 2026, 러셀그룹)",
+                        location: "런던 (London, 블룸즈버리 중심)",
+                        tuition: "약 £40,000 ~ £44,000",
+                        desc: "세계 최상위권 종합대학으로, 컴퓨터과학 전 분야에서 뛰어난 연구 역량과 런던 테크 산업과의 강력한 연결고리를 갖추고 있습니다.",
+                        link: "https://www.ucl.ac.uk/prospective-students/graduate/",
+                        edm: "https://www.edmuhak.com/school/2737"
+                    },
+                    {
+                        name: "University of Manchester",
+                        course: "MSc Advanced Computer Science",
+                        rank: "세계 35위 (QS 2026, 러셀그룹)",
+                        location: "맨체스터 (Manchester, 잉글랜드 북서부)",
+                        tuition: "약 £32,000 ~ £35,000",
+                        desc: "컴퓨터의 아버지 앨런 튜링이 재직했던 CS 명문으로, AI·소프트웨어공학·시스템 분야의 폭넓은 세부 트랙을 제공합니다.",
+                        link: "https://www.manchester.ac.uk/study/masters/",
+                        edm: "https://www.edmuhak.com/school/242"
+                    }
+                ]
+            },
+            "데이터사이언스 / AI": {
+                desc: "4차 산업혁명의 핵심인 빅데이터와 인공지능을 다룹니다. 데이터 수집부터 모델링, 시각화까지 미래 유망 IT 산업의 고도화된 기술을 학습합니다.",
+                schools: [
+                    {
+                        name: "University of Edinburgh",
+                        course: "MSc Data Science / MSc Artificial Intelligence",
+                        rank: "세계 34위 (QS 2026, CS 분야 유럽 최고 수준)",
+                        location: "에든버러 (Edinburgh, 스코틀랜드)",
+                        tuition: "약 £38,500 ~ £42,000",
+                        desc: "인포매틱스 분야에서 영국 최고 수준의 연구 성과를 자랑하며, 인공지능과 빅데이터 분야에서 스코틀랜드와 유럽의 선두주자입니다.",
+                        link: "https://www.ed.ac.uk/informatics/postgraduate",
+                        edm: "https://www.edmuhak.com/school/222"
+                    },
+                    {
+                        name: "King's College London (KCL)",
+                        course: "MSc Data Science",
+                        rank: "세계 31위 (QS 2026, 러셀그룹)",
+                        location: "런던 (London, 중심부)",
+                        tuition: "약 £35,000 ~ £39,000",
+                        desc: "런던 중심부에 위치하여 금융권 및 글로벌 IT 기업들과의 네트워크가 뛰어납니다. 데이터 알고리즘과 응용 데이터 분석 연구에 특화되어 있습니다.",
+                        link: "https://www.kcl.ac.uk/study/postgraduate-taught",
+                        edm: "https://www.edmuhak.com/school/279"
+                    }
+                ]
+            },
+            "사이버보안": {
+                desc: "해킹 방어 체계 구축, 암호학, 보안 시스템 설계를 다루는 분야입니다. 영국 정부(NCSC) 인증 과정이 다수 운영되어 보안 전문가 커리어에 직결됩니다.",
+                schools: [
+                    {
+                        name: "King's College London (KCL)",
+                        course: "MSc Cyber Security",
+                        rank: "세계 31위 (QS 2026, 러셀그룹)",
+                        location: "런던 (London, 중심부)",
+                        tuition: "약 £35,000 ~ £38,000",
+                        desc: "복잡한 시스템의 보안 및 사이버 위협 분석에 특화되어 있으며, 런던 금융권·정부기관과의 보안 협력 프로젝트가 활발합니다.",
+                        link: "https://www.kcl.ac.uk/study/postgraduate-taught",
+                        edm: "https://www.edmuhak.com/school/279"
+                    },
+                    {
+                        name: "University of Southampton",
+                        course: "MSc Cyber Security",
+                        rank: "세계 87위 / 영국 14위 (QS 2026, 러셀그룹)",
+                        location: "사우샘프턴 (Southampton, 잉글랜드 남부)",
+                        tuition: "약 £30,000 ~ £33,000",
+                        desc: "영국 정부 공인 사이버보안 연구 우수센터(ACE-CSR)로 지정된 명문으로, 전자·컴퓨터공학(ECS) 학부의 탄탄한 인프라를 기반으로 합니다.",
+                        link: "https://www.southampton.ac.uk/study/postgraduate-taught",
+                        edm: "https://www.edmuhak.com/school/293"
+                    }
+                ]
+            },
+            "기계 / 항공우주공학": {
+                desc: "최첨단 모빌리티(항공우주/자동차)와 제조 기술을 다루는 산업의 근간입니다. 영국은 전통적으로 공학 분야에서 세계적인 산학협력 네트워크를 갖추고 있습니다.",
+                schools: [
+                    {
+                        name: "Cranfield University",
+                        course: "MSc Aerospace Engineering / Automotive Engineering",
+                        rank: "항공우주 분야 영국 1위 (대학원 중심 대학)",
+                        location: "크랜필드 (Cranfield, 잉글랜드 베드퍼드셔)",
+                        tuition: "약 £28,000 ~ £30,000",
+                        desc: "영국 내 유일하게 공항을 자체 소유한 대학원으로, Rolls-Royce, BAE Systems 등 글로벌 항공/자동차 기업들과의 독보적인 공동 프로젝트를 진행합니다.",
+                        link: "https://www.cranfield.ac.uk/themes/aerospace",
+                        edm: "https://www.edmuhak.com/university-abroad/uk/major-school-detail/24"
+                    },
+                    {
+                        name: "University of Sheffield",
+                        course: "MSc Mechanical Engineering / Aerospace Engineering",
+                        rank: "세계 92위 / 영국 15위 (QS 2026, 러셀그룹)",
+                        location: "셰필드 (Sheffield, 잉글랜드 중북부)",
+                        tuition: "약 £30,000 ~ £32,000",
+                        desc: "러셀그룹 소속으로, 기계·항공공학 분야에서 탁월한 연구 실적과 첨단 실험 시설(Diamond 건물), Boeing과의 공동 연구센터(AMRC)를 보유하고 있습니다.",
+                        link: "https://www.sheffield.ac.uk/engineering",
+                        edm: "https://www.edmuhak.com/school/357"
+                    }
+                ]
+            },
+            "토목 / 구조공학": {
+                desc: "인류의 생활환경을 설계하는 토목·구조·건설 분야입니다. 영국은 세계적인 엔지니어링 컨설팅 기업(Arup, Atkins 등)의 본고장으로 취업 연계가 강합니다.",
+                schools: [
+                    {
+                        name: "University of Sheffield",
+                        course: "MSc Civil Engineering / Structural Engineering",
+                        rank: "세계 92위 / 영국 15위 (QS 2026, 러셀그룹)",
+                        location: "셰필드 (Sheffield, 잉글랜드 중북부)",
+                        tuition: "약 £30,000 ~ £32,000",
+                        desc: "토목공학 분야에서 영국 최상위권 연구 실적을 보유하며, 구조·지반·수자원 등 폭넓은 세부 전공 트랙을 제공합니다.",
+                        link: "https://www.sheffield.ac.uk/engineering",
+                        edm: "https://www.edmuhak.com/school/357"
+                    },
+                    {
+                        name: "University of Leeds",
+                        course: "MSc (Eng) Civil Engineering",
+                        rank: "세계 86위 / 영국 13위 (QS 2026, 러셀그룹)",
+                        location: "리즈 (Leeds, 잉글랜드 북부)",
+                        tuition: "약 £29,000 ~ £31,000",
+                        desc: "영국 최대 규모 공과대학 중 하나로, 구조공학·환경토목 분야의 산업체 연계 프로젝트와 JBM 공인 커리큘럼을 운영합니다.",
+                        link: "https://www.leeds.ac.uk/masters-courses",
+                        edm: "https://www.edmuhak.com/school/367"
+                    }
+                ]
+            },
+            "전기 / 전자공학": {
+                desc: "반도체, 통신, 전력 시스템, 임베디드 시스템을 다루는 분야입니다. AI 하드웨어와 신재생 에너지 산업 성장으로 수요가 급증하고 있습니다.",
+                schools: [
+                    {
+                        name: "University of Southampton",
+                        course: "MSc Electronic Engineering",
+                        rank: "세계 87위 / 영국 14위 (QS 2026, 러셀그룹)",
+                        location: "사우샘프턴 (Southampton, 잉글랜드 남부)",
+                        tuition: "약 £30,000 ~ £33,000",
+                        desc: "전자컴퓨터공학부(ECS)는 영국 전자공학 분야의 최고 명문 중 하나로, 반도체 클린룸 등 세계적 수준의 연구 인프라를 자랑합니다.",
+                        link: "https://www.southampton.ac.uk/study/postgraduate-taught",
+                        edm: "https://www.edmuhak.com/school/293"
+                    },
+                    {
+                        name: "University of Manchester",
+                        course: "MSc Electrical and Electronic Engineering",
+                        rank: "세계 35위 (QS 2026, 러셀그룹)",
+                        location: "맨체스터 (Manchester, 잉글랜드 북서부)",
+                        tuition: "약 £32,000 ~ £34,000",
+                        desc: "그래핀을 최초 분리한 노벨상 연구의 산실로, 전력시스템·반도체·나노소재 분야에서 세계적인 연구 역량을 보유하고 있습니다.",
+                        link: "https://www.manchester.ac.uk/study/masters/",
+                        edm: "https://www.edmuhak.com/school/242"
+                    }
+                ]
+            },
+            "국제개발학": {
+                desc: "환경, 빈곤, 국제관계 등 글로벌 이슈를 연구하는 분야로, UN 등 국제기구 진출을 목표로 하는 학생과 공무원 국비 유학으로 가장 선호됩니다.",
+                schools: [
+                    {
+                        name: "University of Sussex",
+                        course: "MA Development Studies",
+                        rank: "개발학(Development Studies) 부동의 세계 1위",
+                        location: "브라이튼 (Brighton, 잉글랜드 남부)",
+                        tuition: "약 £23,000 ~ £25,000",
+                        desc: "수년간 하버드, 옥스퍼드를 제치고 개발학 분야 세계 1위를 수성하고 있는 명실상부한 최고 명문으로, UN 등 국제기구 진출에 유리합니다.",
+                        link: "https://www.sussex.ac.uk/study/masters/global-studies",
+                        edm: "https://www.edmuhak.com/school/359"
+                    },
+                    {
+                        name: "University of Manchester",
+                        course: "MSc International Development",
+                        rank: "개발학 세계 Top 10 (Global Development Institute)",
+                        location: "맨체스터 (Manchester, 잉글랜드 북서부)",
+                        tuition: "약 £25,000 ~ £27,000",
+                        desc: "유럽 최대 규모의 개발학 연구소(GDI)를 보유하고 있으며, 빈곤·환경·글로벌 거버넌스 등 다양한 세부 트랙을 선택할 수 있습니다.",
+                        link: "https://www.manchester.ac.uk/study/masters/",
+                        edm: "https://www.edmuhak.com/school/242"
+                    }
+                ]
+            },
+            "공공정책 / 행정 (MPA)": {
+                desc: "국가 발전의 틀을 짜는 행정학(MPA)과 공공정책학을 다룹니다. 한국 공무원 및 공공기관 국비 유학으로 가장 선호되는 분야입니다.",
+                schools: [
+                    {
+                        name: "University of York",
+                        course: "Master of Public Administration (MPA)",
+                        rank: "세계 169위 / 영국 25위 (QS 2026, 사회정책 Top 10)",
+                        location: "요크 (York, 잉글랜드 북부)",
+                        tuition: "약 £24,000 ~ £26,000",
+                        desc: "공공정책(Public Policy) 및 행정학(MPA) 분야에서 뛰어난 성과를 내고 있으며, 한국 공무원 및 정부 산하기관 임직원들이 가장 선호하는 대학 중 하나입니다.",
+                        link: "https://www.york.ac.uk/study/postgraduate/courses/",
+                        edm: "https://www.edmuhak.com/school/350"
+                    },
+                    {
+                        name: "University of Glasgow",
+                        course: "MSc Public Policy & Management",
+                        rank: "세계 79위 / 영국 12위 (QS 2026, 러셀그룹)",
+                        location: "글래스고 (Glasgow, 스코틀랜드)",
+                        tuition: "약 £25,000 ~ £27,000",
+                        desc: "스코틀랜드 명문 러셀그룹 대학으로, 공공관리와 정책 분석을 결합한 실무형 커리큘럼을 제공하며 국제 공공부문 네트워크가 탄탄합니다.",
+                        link: "https://www.gla.ac.uk/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/361"
+                    }
+                ]
+            },
+            "법학 (LLM)": {
+                desc: "국제법, 상법, 금융법 중심의 영미법 석사(LLM) 과정입니다. 영국은 국제 상사중재와 금융법의 중심지로 글로벌 로펌 커리어에 직결됩니다.",
+                schools: [
+                    {
+                        name: "Queen Mary University of London",
+                        course: "LLM (International Business Law 등 20+ 트랙)",
+                        rank: "세계 110위 / 영국 18위 (QS 2026, LLM 명문)",
+                        location: "런던 (London, 잉글랜드)",
+                        tuition: "약 £27,000 ~ £30,000",
+                        desc: "런던대 소속 러셀그룹 대학으로, 세계 최대 규모의 LLM 프로그램과 국제상사법·중재 분야의 압도적인 명성을 자랑합니다.",
+                        link: "https://www.qmul.ac.uk/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/371"
+                    },
+                    {
+                        name: "University of Leeds",
+                        course: "LLM International Law",
+                        rank: "세계 86위 / 영국 13위 (QS 2026, 러셀그룹)",
                         location: "리즈 (Leeds, 잉글랜드 북부)",
                         tuition: "약 £26,000 ~ £28,000",
-                        desc: "교육학 및 영어교육(TESOL), 법학(LLM) 분야에서 영국 상위권에 위치하며, 다양한 모듈 선택권을 통해 학생 맞춤형 커리큘럼을 제공합니다.",
-                        link: "https://www.leeds.ac.uk/masters-courses"
+                        desc: "법학(LLM) 분야에서 영국 상위권에 위치하며, 다양한 모듈 선택권을 통해 학생 맞춤형 커리큘럼을 제공합니다.",
+                        link: "https://www.leeds.ac.uk/masters-courses",
+                        edm: "https://www.edmuhak.com/school/367"
+                    }
+                ]
+            },
+            "TESOL / 교육학": {
+                desc: "영어 교육의 본고장에서 배우는 TESOL과 교육학입니다. 교사 경력자와 교육 정책 전문가를 목표로 하는 학생 모두에게 적합합니다.",
+                schools: [
+                    {
+                        name: "University College London (UCL)",
+                        course: "MA Education (IOE)",
+                        rank: "교육학(Education) 부동의 세계 1위 (QS 전공랭킹)",
+                        location: "런던 (London, 블룸즈버리 중심)",
+                        tuition: "약 £27,000 ~ £30,000",
+                        desc: "UCL 교육대학원(IOE)은 수년 연속 교육학 분야 세계 1위를 지키고 있는 교육학의 최고 명문으로, 교육정책·리더십·TESOL 등 폭넓은 과정을 운영합니다.",
+                        link: "https://www.ucl.ac.uk/ioe/",
+                        edm: "https://www.edmuhak.com/school/2737"
+                    },
+                    {
+                        name: "University of Leeds",
+                        course: "MA TESOL",
+                        rank: "세계 86위 / 영국 13위 (QS 2026, 러셀그룹)",
+                        location: "리즈 (Leeds, 잉글랜드 북부)",
+                        tuition: "약 £26,000 ~ £28,000",
+                        desc: "교육학 및 영어교육(TESOL) 분야에서 영국 상위권에 위치하며, 다양한 모듈 선택권을 통해 학생 맞춤형 커리큘럼을 제공합니다.",
+                        link: "https://www.leeds.ac.uk/masters-courses",
+                        edm: "https://www.edmuhak.com/school/367"
+                    }
+                ]
+            },
+            "박물관학 / 예술경영": {
+                desc: "예술경영과 박물관학(Museum Studies)을 심도 있게 탐구하는 문화/예술 융합 학문입니다. 박물관·갤러리·문화기관 커리어로 이어집니다.",
+                schools: [
+                    {
+                        name: "University of Leicester",
+                        course: "MA/MSc Museum Studies",
+                        rank: "박물관학(Museum Studies) 압도적 세계 선두",
+                        location: "레스터 (Leicester, 잉글랜드 중부)",
+                        tuition: "약 £22,000 ~ £24,000",
+                        desc: "박물관학 분야에서 가장 오랜 역사와 최고 수준의 연구 실적을 자랑하며, 전 세계 박물관 및 갤러리와 광범위한 산학연계(Placement)를 맺고 있습니다.",
+                        link: "https://le.ac.uk/museum-studies",
+                        edm: "https://www.edmuhak.com/school/247"
+                    },
+                    {
+                        name: "Goldsmiths, University of London",
+                        course: "MA Arts Administration & Cultural Policy",
+                        rank: "예술 & 디자인 분야 세계 상위권 (QS 전공랭킹)",
+                        location: "런던 (London, 잉글랜드)",
+                        tuition: "약 £24,000 ~ £26,000",
+                        desc: "런던의 풍부한 문화예술 인프라를 활용한 예술경영·문화정책 과정으로, 갤러리·극장·문화재단과의 현장 연계가 활발합니다.",
+                        link: "https://www.gold.ac.uk/pg/",
+                        edm: "https://www.edmuhak.com/school/722"
+                    }
+                ]
+            },
+            "생의과학 / 바이오": {
+                desc: "첨단 의공학(Biomedical)부터 생명과학, 바이오테크까지 인간의 건강을 연구하는 분야입니다. 제약·바이오 산업과 연구직 커리어로 이어집니다.",
+                schools: [
+                    {
+                        name: "University College London (UCL)",
+                        course: "MSc Biomedical Science",
+                        rank: "세계 9위 / 생명과학 및 의학 세계 최상위 (QS 2026)",
+                        location: "런던 (London, 블룸즈버리 중심)",
+                        tuition: "약 £35,000 ~ £40,000",
+                        desc: "런던 중심부에 위치한 명문으로, 뇌과학 및 생명과학, 공중보건 분야에서 세계 최상위권의 연구 역량과 병원 인프라를 갖추고 있습니다.",
+                        link: "https://www.ucl.ac.uk/prospective-students/graduate/",
+                        edm: "https://www.edmuhak.com/school/2737"
+                    },
+                    {
+                        name: "University of Glasgow",
+                        course: "MSc Biomedical Sciences",
+                        rank: "세계 79위 / 영국 12위 (QS 2026, 러셀그룹)",
+                        location: "글래스고 (Glasgow, 스코틀랜드)",
+                        tuition: "약 £28,000 ~ £31,000",
+                        desc: "생명의학 연구 분야에서 영국 최상위권 인프라를 갖춘 스코틀랜드 명문으로, 대학병원과 연계된 실습 중심 커리큘럼을 제공합니다.",
+                        link: "https://www.gla.ac.uk/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/361"
+                    }
+                ]
+            },
+            "심리학 (Conversion 포함)": {
+                desc: "범죄/상담 심리학과 비전공자를 위한 심리학 전환(Conversion) 과정을 포함합니다. BPS(영국심리학회) 인증 과정 이수 시 심리학 커리어의 기반이 됩니다.",
+                schools: [
+                    {
+                        name: "University of Bristol",
+                        course: "MSc Psychology (Conversion) / Applied Neuropsychology",
+                        rank: "세계 51위 (QS 2026, 심리학/보건 영국 Top 10)",
+                        location: "브리스톨 (Bristol, 잉글랜드 남서부)",
+                        tuition: "약 £30,000 ~ £33,000",
+                        desc: "비전공자를 위한 심리학 석사(Conversion - BPS 인증) 과정이 매우 우수하며, 응용 신경심리학 등 세부 전공에서도 뛰어난 성과를 보여줍니다.",
+                        link: "https://www.bristol.ac.uk/study/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/347"
+                    },
+                    {
+                        name: "University of York",
+                        course: "MSc Psychology (Conversion)",
+                        rank: "세계 169위 / 영국 25위 (QS 2026, 심리학 강세)",
+                        location: "요크 (York, 잉글랜드 북부)",
+                        tuition: "약 £26,000 ~ £28,000",
+                        desc: "BPS 인증 심리학 전환 과정을 운영하는 심리학 연구 명문으로, 합리적인 학비와 안정적인 학업 환경으로 한국 학생들의 만족도가 높습니다.",
+                        link: "https://www.york.ac.uk/study/postgraduate/courses/",
+                        edm: "https://www.edmuhak.com/school/350"
+                    }
+                ]
+            },
+            "공중보건 (Public Health)": {
+                desc: "인구 집단의 건강 증진과 질병 예방 정책을 연구하는 분야입니다. 보건 행정, 역학, 글로벌 헬스 커리어와 국제기구(WHO 등) 진출로 이어집니다.",
+                schools: [
+                    {
+                        name: "University of Edinburgh",
+                        course: "Master of Public Health (MPH)",
+                        rank: "세계 34위 (QS 2026, 의학·보건 세계 최상위권)",
+                        location: "에든버러 (Edinburgh, 스코틀랜드)",
+                        tuition: "약 £31,000 ~ £34,000",
+                        desc: "세계적인 의과대학 전통을 기반으로 한 MPH 과정으로, 역학·보건정책·글로벌 헬스를 아우르는 커리큘럼을 제공합니다.",
+                        link: "https://www.ed.ac.uk/studying/postgraduate",
+                        edm: "https://www.edmuhak.com/school/222"
+                    },
+                    {
+                        name: "University of Glasgow",
+                        course: "Master of Public Health (MPH)",
+                        rank: "세계 79위 / 영국 12위 (QS 2026, 러셀그룹)",
+                        location: "글래스고 (Glasgow, 스코틀랜드)",
+                        tuition: "약 £26,000 ~ £29,000",
+                        desc: "보건학 연구 명문으로 WHO 협력센터를 보유하고 있으며, 실무 중심의 공중보건 교육과 합리적인 학비가 강점입니다.",
+                        link: "https://www.gla.ac.uk/postgraduate/",
+                        edm: "https://www.edmuhak.com/school/361"
                     }
                 ]
             }
         };
+
+        // 계열 선택 → 세부 전공 선택 (2단계)
+        function renderMajorCategories() {
+            const c = document.getElementById('options-container');
+            c.innerHTML = '';
+            Object.keys(majorCategories).forEach(cat => {
+                const b = document.createElement('button');
+                b.className = OPT_BTN_CLASS;
+                b.innerText = cat;
+                b.onclick = () => {
+                    addChatBubble('user', cat);
+                    addChatBubble('ai', `<strong>${cat}</strong>을 선택하셨네요. 이제 세부 전공을 선택해주세요.`);
+                    renderMajorList(cat);
+                };
+                c.appendChild(b);
+            });
+        }
+
+        function renderMajorList(cat) {
+            const c = document.getElementById('options-container');
+            c.innerHTML = '';
+            majorCategories[cat].forEach(m => {
+                const b = document.createElement('button');
+                b.className = OPT_BTN_CLASS;
+                b.innerText = m;
+                b.onclick = () => handleAnswer(m, m);
+                c.appendChild(b);
+            });
+            const back = document.createElement('button');
+            back.className = 'pill-btn bg-transparent text-gray-400 border border-[#3d3d40] hover:bg-[#2d2d2f] py-3.5 px-4 font-medium text-[14px] md:text-[15px] w-full sm:col-span-2';
+            back.innerText = '← 계열 다시 선택하기';
+            back.onclick = renderMajorCategories;
+            c.appendChild(back);
+        }
 
         const questions = [
             {
@@ -401,8 +770,8 @@
             },
             {
                 key: "major",
-                q: "영국 석사 과정에서 희망하시는 세부 전공 분야를 선택해주세요.",
-                options: Object.keys(majorData).map(k => ({ label: k, value: k }))
+                q: "영국 석사 과정에서 희망하시는 전공 계열을 먼저 선택해주세요. 계열 선택 후 세부 전공을 고르실 수 있습니다.",
+                options: [] // 계열 → 세부 전공 2단계 커스텀 렌더링 (renderMajorCategories)
             },
             {
                 key: "sameMajor",
@@ -469,7 +838,12 @@
             if (step < questions.length) {
                 const q = questions[step];
                 addChatBubble('ai', q.q);
-                
+
+                if (q.key === 'major') {
+                    renderMajorCategories();
+                    return;
+                }
+
                 const optsContainer = document.getElementById('options-container');
                 optsContainer.innerHTML = '';
                 
@@ -690,9 +1064,14 @@
                                         ${school.desc}
                                     </p>
                                     
-                                    <a href="${school.link}" target="_blank" class="uni-link-banner text-center font-semibold py-3.5 px-4 w-full flex items-center justify-center gap-2 text-[15px]">
-                                        대학 상세 페이지 보기 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
-                                    </a>
+                                    <div class="flex flex-col gap-2.5">
+                                        <a href="${school.edm}" target="_blank" class="edm-link-banner text-center font-semibold py-3.5 px-4 w-full flex items-center justify-center gap-2 text-[15px]">
+                                            <i class="fa-solid fa-building-columns text-xs"></i> edm유학센터 대학 안내 보기
+                                        </a>
+                                        <a href="${school.link}" target="_blank" class="uni-link-banner text-center font-semibold py-3.5 px-4 w-full flex items-center justify-center gap-2 text-[15px]">
+                                            대학 공식 페이지 보기 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
