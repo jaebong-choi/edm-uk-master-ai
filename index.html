@@ -779,7 +779,8 @@
                 options: [
                     { label: "네, 동일/유사 전공입니다 (전공자)", value: "전공자" },
                     { label: "아니요, 분야를 바꿉니다 (비전공자)", value: "비전공자" }
-                ]
+                ],
+                note: "※ 학교별로 비전공자의 경우 관련 경력을 요구할 수 있습니다."
             },
             {
                 key: "target",
@@ -854,6 +855,13 @@
                     btn.onclick = () => handleAnswer(opt.value, opt.label);
                     optsContainer.appendChild(btn);
                 });
+
+                if (q.note) {
+                    const note = document.createElement('p');
+                    note.className = 'text-[13px] text-gray-500 leading-relaxed text-center sm:col-span-2 mt-1';
+                    note.innerText = q.note;
+                    optsContainer.appendChild(note);
+                }
             } else {
                 document.getElementById('options-container').innerHTML = '';
                 addChatBubble('ai', '정보 입력이 완료되었습니다. 최신 26/27 영국 대학 입시 알고리즘을 통해 결과를 분석 중입니다...');
